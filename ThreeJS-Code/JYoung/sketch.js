@@ -1,5 +1,6 @@
-
-// Ensure ThreeJS is in global scope for the 'examples/'
+import * as Planet from './src/constants/planets.js';
+import { AU, SIDERAL_DAY, NM_TO_KM, DAY, HOUR,KM } from './src/constants/index.js';
+//import {THREE} from './node_modules/three';
 
 const settings = {
   // Make the loop animated
@@ -13,7 +14,9 @@ const SCREEN_HEIGHT = window.innerHeight;
 
 
 window.onload = function init() 
-{
+{ 
+  //const p = SUN.radius;
+  
 	const canvas = document.getElementById( "gl-canvas" );
   // RENDERER
   const renderer = new THREE.WebGLRenderer({
@@ -34,7 +37,7 @@ window.onload = function init()
    * TEXTURES
    */
   const loader = new THREE.TextureLoader();
-
+  
   const sunTexture = loader.load("assets/sun.jpg");
   const mercuryTexture = loader.load("assets/mercury.jpg");
   const venusTexture = loader.load("assets/venus.jpg");
@@ -128,43 +131,45 @@ window.onload = function init()
   var clock = new THREE.Clock();
   var speed = 1;
   var delta = 0;
+  var movement = 1;
 
   // draw each frame
   render();
 
   function render(){
-    time = clock.getElapsedTime();
-    
+    var time = clock.getElapsedTime(); 
+
     console.log(time);
     controls.update();
-    sunMesh.rotation.y = time * 0.05
+    movement +=0.1;
+    sunMesh.rotation.y = movement * 0.05
 
-    mercuryGroup.rotation.y = time * 0.5;
-    mercuryMesh.rotation.y = time * 0.20;
+    mercuryGroup.rotation.y = movement * 0.5;
+    mercuryMesh.rotation.y = movement * 0.20;
 
-    venusGroup.rotation.y = time * 0.35;
-    venusMesh.rotation.y = time * 0.18;
+    venusGroup.rotation.y = movement * 0.35;
+    venusMesh.rotation.y = movement * 0.18;
 
-    earthGroup.rotation.y = time * 0.3;
-    earthMesh.rotation.y = time * 0.15;
+    earthGroup.rotation.y = movement * 0.3;
+    earthMesh.rotation.y = movement * 0.15;
 
-    marsGroup.rotation.y = time * 0.2;
-    marsMesh.rotation.y = time * 0.2;
+    marsGroup.rotation.y = movement * 0.2;
+    marsMesh.rotation.y = movement * 0.2;
 
-    jupiterGroup.rotation.y = time * 0.05;
-    jupiterMesh.rotation.y = time * 0.05;
+    jupiterGroup.rotation.y = movement * 0.05;
+    jupiterMesh.rotation.y = movement * 0.05;
 
-    saturnGroup.rotation.y = time * 0.03;
-    saturnMesh.rotation.y = time * 0.25;
+    saturnGroup.rotation.y = movement * 0.03;
+    saturnMesh.rotation.y = movement * 0.25;
 
-    uranusGroup.rotation.y = time * 0.02;
-    uranusMesh.rotation.y = time * 0.25;
+    uranusGroup.rotation.y = movement * 0.02;
+    uranusMesh.rotation.y = movement * 0.25;
 
-    neptuneGroup.rotation.y = time * 0.015;
-    neptuneMesh.rotation.y = time * 0.25;
+    neptuneGroup.rotation.y = movement * 0.015;
+    neptuneMesh.rotation.y = movement * 0.25;
 
-    plutoGroup.rotation.y = time * 0.005;
-    plutoMesh.rotation.y = time * 0.2;
+    plutoGroup.rotation.y = movement * 0.005;
+    plutoMesh.rotation.y = movement * 0.2;
 
     requestAnimationFrame(render);
     renderer.render(scene, camera);
