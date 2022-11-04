@@ -533,12 +533,14 @@ function space_ship_render(){
   gltfloader.load('assets/spaceship.gltf', function( gltf) {
       spaceship = gltf.scene;
       console.log(spaceship);
+
       
+      spaceship.scene.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
+      spaceship.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
       
       console.log(spaceship.position.x, spaceship.position.y, spaceship.position.z)
 
-      spaceship.scene.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
-      spaceship.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
+      
 
       // spaceship.scene.scale.set(0.01, 0.01, 0.01);
       // spaceship.scene = gltf.scene;
