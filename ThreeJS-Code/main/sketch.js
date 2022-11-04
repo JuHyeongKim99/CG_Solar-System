@@ -13,7 +13,7 @@ const settings = {
 };
 
 var plants_Mesh = [];
-
+var spaceship_exist = false;
 
 //compute angle
 function angleToRad (angle) {
@@ -530,6 +530,8 @@ function space_ship_render(){
   plants_Mesh[3].getWorldPosition(tempEarth);
   console.log(tempEarth.x,tempEarth.y + 2,tempEarth.z)
 
+  if (!spaceship_exist) {
+
   gltfloader.load('assets/spaceship.gltf', function( gltf) {
       gltf.scene.scale.set(0.1, 0.1, 0.1);
       spaceship.scene = gltf.scene;
@@ -539,12 +541,16 @@ function space_ship_render(){
       spaceship.scene.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
       spaceship.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
       
-      console.log(spaceship.position.x, spaceship.position.y, spaceship.position.z)
-
-      scene.add(spaceship.scene)
-
-      
+      console.log(spaceship.position.x, spaceship.position.y, spaceship.position.z);
+      scene.add(spaceship.scene);
+      spaceship_exist = true;
   } );
+}
+  else {
+      spaceship.scene.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
+      spaceship.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
+
+}
 
   
   // console.log(spaceship)
