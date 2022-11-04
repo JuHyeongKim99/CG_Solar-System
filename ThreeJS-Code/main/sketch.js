@@ -1,6 +1,7 @@
 import * as Planet from './src/constants/planets.js';
 import * as Index from './src/constants/index.js';
 import * as CalculateOrbit from './cal_orbit.js';
+
 //import * as OrbitController from './calculation_orbit.js'; 
 //<- 이 부분에서 오류 나는 듯
 const settings = {
@@ -10,6 +11,8 @@ const settings = {
   context: "webgl",
   scaleToView: true
 };
+
+var plants_Mesh = [];
 
 
 //compute angle
@@ -152,7 +155,7 @@ window.onload = function init()
 
   //plants number
   var plants_number = 10;//-DongMin
-  var plants_Mesh = [];//-DongMin
+  //-DongMin
 
   const sunMesh = new THREE.Mesh(geometry, sunMaterial);
   sunMesh.position.set(0, 0, 0);
@@ -502,6 +505,8 @@ function moveCam(eye_x, eye_y, eye_z, target_x, target_y, target_z, Mesh)
 */
 var mesh_ship;
 var speed = 0.0;
+var spaceship = new THREE.Object3D();
+var spaceshipScene
 
 function space_ship_render(){
   window.cancelAnimationFrame(moveID);
@@ -517,19 +522,47 @@ function space_ship_render(){
   var a = new THREE.Vector3;
   var b = new THREE.Vector3;
 
-  var geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );// 테스트용 큐브 object
+  var gltfloader = new THREE.GLTFLoader();
   var material = new THREE.MeshNormalMaterial();
 
-  mesh_ship = new THREE.Mesh( geometry, material );
-  mesh_ship.position.set(0,10.5,0);
+  var tempEarth = new THREE.Vector3();
+
+  plants_Mesh[3].getWorldPosition(tempEarth);
+  console.log(tempEarth.x,tempEarth.y + 2,tempEarth.z)
+
+  gltfloader.load('assets/spaceship.gltf', function( gltf) {
+      spaceship = gltf.scene;
+      console.log(spaceship);
+      
+      
+      console.log(spaceship.position.x, spaceship.position.y, spaceship.position.z)
+
+      spaceship.scene.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
+      spaceship.position.set(tempEarth.x,tempEarth.y + 2,tempEarth.z);
+
+      // spaceship.scene.scale.set(0.01, 0.01, 0.01);
+      // spaceship.scene = gltf.scene;
+      scene.add(spaceship.scene)
+
+      
+  } );
+
+  
+  // console.log(spaceship)
+  // mesh_ship = new THREE.Mesh( spaceship.geometry, material );
+  
+  // mesh_ship.position
+
+  // spaceship
     
   //goal_ship = new THREE.Object3D;
   follow = new THREE.Object3D;
   follow.position.z = -coronaSafetyDistance;
-  mesh_ship.add( follow );
-  
-  //goal_ship.add( camera[1] );
-  scene.add( mesh_ship );
+  // mesh_ship.add( follow );
+
+  spaceship.add(follow);
+  // mesh_ship = spaceship
+
 
     keys = {//방향키 초기화
       a: false,
@@ -556,7 +589,7 @@ function space_ship_render(){
       
     });
     value_z = 5;
-    camera[1].position.set( mesh_ship.position.x,mesh_ship.position.y + 3,mesh_ship.position.z - 5 );
+    camera[1].position.set( spaceshipScene.position.x,spaceship.position.y + 3,spaceshipScene.position.z - 5 );
    animate_spaceship();
   
 
@@ -577,21 +610,21 @@ function space_ship_render(){
     //   speed = -0.1;
 
     velocity += ( speed - velocity ) * .3;
-    mesh_ship.translateZ( velocity );
+    spaceshipScene.translateZ( velocity );
 
     if ( keys.a ){//a면 왼쪽 회전
-      mesh_ship.rotateY(0.02);
+      spaceshipScene.rotateY(0.02);
     }
     else if ( keys.d )//d면 오른쪽 회전
-      mesh_ship.rotateY(-0.02);
+      spaceshipScene.rotateY(-0.02);
     else if ( keys.w )//d면 오른쪽 회전
-      mesh_ship.rotateX(0.02);
+      spaceshipScene.rotateX(0.02);
     else if ( keys.s )//d면 오른쪽 회전
-      mesh_ship.rotateX(-0.02);
+      spaceshipScene.rotateX(-0.02);
       
     //////////////////////////////////////////
     //이부분에서 물체 회전 할 때 카메라 회전하는게 조금 부자연스러워서 로직 수정해야함
-    a.lerp(mesh_ship.position, 0.4);
+    a.lerp(spaceshipScene.position, 0.4);
     //b.copy(goal_ship.position);//goal == camera[0]
     
       dir.copy( a ).sub( b ).normalize();
@@ -602,14 +635,13 @@ function space_ship_render(){
       
       //camera[1].position.set( mesh_ship.position.x,mesh_ship.position.y,mesh_ship.position.z + value_z);
       
-      camera[1].lookAt( mesh_ship.position );
-      controls2.target.set(mesh_ship.position.x,mesh_ship.position.y,mesh_ship.position.z);
+      camera[1].lookAt( spaceshipScene.position );
+      controls2.target.set(spaceshipScene.position.x,spaceshipScene.position.y,spaceshipScene.position.z);
       renderer.render( scene, camera[1] );
       controls2.update();
       ///////////////////////
 
   }
 }
-    renderer.render( scene, camera );
-    controls.update();
+
 
