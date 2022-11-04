@@ -531,8 +531,8 @@ function space_ship_render(){
   console.log(tempEarth.x,tempEarth.y + 2,tempEarth.z)
 
   gltfloader.load('assets/spaceship.gltf', function( gltf) {
-      gltf.scene.scale.set(0.01, 0.01, 0.01);
-      spaceship = gltf.scene;
+      gltf.scene.scale.set(0.1, 0.1, 0.1);
+      spaceship.scene = gltf.scene;
       console.log(spaceship);
 
       
@@ -588,8 +588,9 @@ function space_ship_render(){
       
     });
     value_z = 5;
-    camera[1].position.set( spaceship.scene.position.x, spaceship.scene.position.y + 3, spaceship.scene.position.z - 5 );
    animate_spaceship();
+   camera[1].position.set( spaceship.scene.position.x, spaceship.scene.position.y + 3, spaceship.scene.position.z - 5 );
+
   
 
   function animate_spaceship() {
