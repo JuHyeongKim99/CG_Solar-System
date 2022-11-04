@@ -273,7 +273,15 @@ window.onload = function init() {
   createPlanet(scene, plutoMesh, plutoGroup, 64, Planet.PLUTO.radius / Planet.SUN.radius * sunSize, "PLUTO");//-DongMin
   plants_Mesh = plants_Mesh.concat(plutoMesh);//-DongMin
 
-
+  document.getElementById('demo-mobile-picker-button').addEventListener('click', function (event) {
+    console.log(event);
+  });
+  document
+    .getElementById('show-mobile-date-picker')
+    .addEventListener('click', function () {
+      console.log("!!!!");
+      return false;
+    });
   /*
    * LIGHTING
    */
