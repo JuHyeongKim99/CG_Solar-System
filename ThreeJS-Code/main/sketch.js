@@ -298,7 +298,6 @@ var computed;
     //plutoGroup.rotation.y = movement * 0.005;
     plutoMesh.rotation.y = movement * 0.2;
 
-<<<<<<< Updated upstream
     for(var i = 0; i<10; i++){
       plants_Mesh[i].updateWorldMatrix(true,false);
       plants_Mesh[i].getWorldPosition(tempV);
@@ -309,8 +308,6 @@ var computed;
       labelContainerElem.childNodes[i].style.transform = `translate(-50%, -50%) translate(${ x }px,${ y }px)`;
     }
     
-=======
->>>>>>> Stashed changes
     requestAnimationFrame(render);
     renderer.render(scene, camera[0]);
   }
@@ -597,7 +594,6 @@ function space_ship_render(){
     a.lerp(mesh_ship.position, 0.4);
     //b.copy(goal_ship.position);//goal == camera[0]
     
-<<<<<<< Updated upstream
       dir.copy( a ).sub( b ).normalize();
       const dis = a.distanceTo( b ) - coronaSafetyDistance;
       // goal_ship.position.addScaledVector( dir, dis );
@@ -614,11 +610,6 @@ function space_ship_render(){
 
   }
 }
-=======
     renderer.render( scene, camera );
     controls.update();
-    ///////////////////////
-}
-}
 
->>>>>>> Stashed changes
