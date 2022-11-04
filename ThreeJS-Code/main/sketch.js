@@ -531,6 +531,7 @@ function space_ship_render(){
   console.log(tempEarth.x,tempEarth.y + 2,tempEarth.z)
 
   gltfloader.load('assets/spaceship.gltf', function( gltf) {
+      gltf.scene.scale.set(0.01, 0.01, 0.01);
       spaceship = gltf.scene;
       console.log(spaceship);
 
@@ -540,10 +541,6 @@ function space_ship_render(){
       
       console.log(spaceship.position.x, spaceship.position.y, spaceship.position.z)
 
-      
-
-      // spaceship.scene.scale.set(0.01, 0.01, 0.01);
-      // spaceship.scene = gltf.scene;
       scene.add(spaceship.scene)
 
       
@@ -591,7 +588,7 @@ function space_ship_render(){
       
     });
     value_z = 5;
-    camera[1].position.set( spaceshipScene.position.x,spaceship.position.y + 3,spaceshipScene.position.z - 5 );
+    camera[1].position.set( spaceship.scene.position.x, spaceship.scene.position.y + 3, spaceship.scene.position.z - 5 );
    animate_spaceship();
   
 
@@ -612,21 +609,21 @@ function space_ship_render(){
     //   speed = -0.1;
 
     velocity += ( speed - velocity ) * .3;
-    spaceshipScene.translateZ( velocity );
+    spaceship.scene.translateZ( velocity );
 
     if ( keys.a ){//a면 왼쪽 회전
-      spaceshipScene.rotateY(0.02);
+      spaceship.scene.rotateY(0.02);
     }
     else if ( keys.d )//d면 오른쪽 회전
-      spaceshipScene.rotateY(-0.02);
+      spaceship.scene.rotateY(-0.02);
     else if ( keys.w )//d면 오른쪽 회전
-      spaceshipScene.rotateX(0.02);
+      spaceship.scene.rotateX(0.02);
     else if ( keys.s )//d면 오른쪽 회전
-      spaceshipScene.rotateX(-0.02);
+      spaceship.scene.rotateX(-0.02);
       
     //////////////////////////////////////////
     //이부분에서 물체 회전 할 때 카메라 회전하는게 조금 부자연스러워서 로직 수정해야함
-    a.lerp(spaceshipScene.position, 0.4);
+    a.lerp(spaceship.scene.position, 0.4);
     //b.copy(goal_ship.position);//goal == camera[0]
     
       dir.copy( a ).sub( b ).normalize();
@@ -637,8 +634,8 @@ function space_ship_render(){
       
       //camera[1].position.set( mesh_ship.position.x,mesh_ship.position.y,mesh_ship.position.z + value_z);
       
-      camera[1].lookAt( spaceshipScene.position );
-      controls2.target.set(spaceshipScene.position.x,spaceshipScene.position.y,spaceshipScene.position.z);
+      camera[1].lookAt( spaceship.scene.position );
+      controls2.target.set(spaceship.scene.position.x,spaceship.scene.position.y,spaceship.scene.position.z);
       renderer.render( scene, camera[1] );
       controls2.update();
       ///////////////////////
